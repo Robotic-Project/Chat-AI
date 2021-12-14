@@ -1,1 +1,1 @@
-# Chat-AI
+# Yolo Face Detection Model
