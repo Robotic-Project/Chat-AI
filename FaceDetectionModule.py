@@ -22,20 +22,20 @@ class FaceDetector():
                 bboxs.append([id, bbox, detection.score])
 
                 if draw:
-                    img = self.fancyDraw(img, bbox)
+                    img, location = self.fancyDraw(img, bbox)
 
                     #cv2.rectangle(img, bbox, (0, 255, 0), 2)  # 경계 상자만 출력
                     cv2.putText(img, f'acc: {int(detection.score[0]*100)}%', (bbox[0], bbox[1]-20), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 2)  # 신뢰도 출력
 
-        return img, bboxs  # 이미지 반환
+        return img, bboxs, location  # 이미지 반환
 
     def fancyDraw(self, img, bbox, l = 30, t=5, rt = 1):  # 모서리에 강조주는 경계 박스
         x, y, w, h = bbox
         x1, y1 = int(w/2), int(h/4)
 
-        cv2.rectangle(img, bbox, (0, 255, 0), rt)  # 경계 상자만 출력
+        #cv2.rectangle(img, bbox, (0, 255, 0), rt)  # 경계 상자만 출력
         cv2.line(img, (x+x1, y+y1), (x+x1+1, y+y1+1), (0, 0, 255), 5)   # 비모의 추적점
-        return img
+        return img, ((x+x1, y+y1), (x+x1+1, y+y1+1))
 
 
 def main():
@@ -46,7 +46,8 @@ def main():
     while True:
         success, img = cap.read()
         #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)   # 이미지 색을 흑백으로 변경(계산 속도 향상을 위해)
-        img, bboxs = detector.findFaces(img)
+        img, bboxs, location = detector.findFaces(img)
+        print(location)
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
