@@ -38,7 +38,7 @@ class FaceDetector():
         cv2.rectangle(img, bbox, (0, 255, 0), rt)  # 경계 상자만 출력
         cv2.line(img, (x+x1, y+y1), (x+x1+1, y+y1+1), (0, 0, 255), 5)   # 비모의 추적점
 
-        if abs(FaceDetector.tx-x)> 10 or abs(FaceDetector.ty-y) > 10:
+        if abs(FaceDetector.tx-x)> 3 or abs(FaceDetector.ty-y) > 3:
             FaceDetector.tx = x
             FaceDetector.ty = y
             setLocation(x, y)
