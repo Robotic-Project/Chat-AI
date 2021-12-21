@@ -1,3 +1,4 @@
+from typing import Counter
 import cv2
 import mediapipe as mp
 from LocationCon import setLocation
@@ -22,14 +23,13 @@ class FaceDetector():
                 ih, iw, ic = img.shape
                 bbox = int(bboxC.xmin * iw), int(bboxC.ymin * ih), int(bboxC.width * iw), int(bboxC.height * ih)
                 bboxs.append([id, bbox, detection.score])
-
-                if draw:
-                    img, location = self.fancyDraw(img, bbox)
-
-                    #cv2.rectangle(img, bbox, (0, 255, 0), 2)  # 경계 상자만 출력
-                    cv2.putText(img, f'acc: {int(detection.score[0]*100)}%', (bbox[0], bbox[1]-20), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 2)  # 신뢰도 출력
-
-        return img, bboxs, location  # 이미지 반환
+                
+                
+            if draw and len(bboxs) == 1:
+                img, location = self.fancyDraw(img, bbox)
+                #cv2.rectangle(img, bbox, (0, 255, 0), 2)  # 경계 상자만 출력
+                cv2.putText(img, f'acc: {int(detection.score[0]*100)}%', (bbox[0], bbox[1]-20), cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 2)  # 신뢰도 출력
+        return img, bboxs  # 이미지 반환
 
     def fancyDraw(self, img, bbox, l = 30, t=5, rt = 1):  # 모서리에 강조주는 경계 박스
         x, y, w, h = bbox
@@ -38,7 +38,7 @@ class FaceDetector():
         cv2.rectangle(img, bbox, (0, 255, 0), rt)  # 경계 상자만 출력
         cv2.line(img, (x+x1, y+y1), (x+x1+1, y+y1+1), (0, 0, 255), 5)   # 비모의 추적점
 
-        if abs(FaceDetector.tx-x)> 3 or abs(FaceDetector.ty-y) > 3:
+        if (abs(FaceDetector.tx-x)> 3 or abs(FaceDetector.ty-y) > 3):
             FaceDetector.tx = x
             FaceDetector.ty = y
             setLocation(x, y)

@@ -1,12 +1,12 @@
 import pygame
 
 pygame.init()
-size = [1080, 800]
+size = [1080, 1080]
 screen= pygame.display.set_mode(size ,pygame.NOFRAME)
   
 pygame.display.set_caption("BMO")
 
-background = pygame.image.load("C:/Users/maydr/Documents/BMO/Face-Detection/source/unknown.png")
+background = pygame.image.load("C:/Users/maydr/Documents/BMO/Face-Detection/source/001.png")
 
 running = True
 while running:

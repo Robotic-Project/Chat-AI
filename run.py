@@ -13,8 +13,7 @@ def main():
     while True:
         success, img = cap.read()
         #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)   # 이미지 색을 흑백으로 변경(계산 속도 향상을 위해)
-        img, bboxs, location = detector.findFaces(img)
-        print(location)
+        img, bboxs = detector.findFaces(img)
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
