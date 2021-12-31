@@ -23,13 +23,15 @@ def main():
         cv2.putText(img, f'FPS: {int(fps)}', (20, 40), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
         cv2.imshow('Image', img)
 
+        cv2.namedWindow("BMO", cv2.WINDOW_NORMAL);
+        cv2.setWindowProperty('BMO', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         if len(bboxs) != 0:
             bbox = bboxs[0][1]
             cv2.imshow('BMO', bmoBg)
-            
             cv2.moveWindow('BMO', bbox[0], bbox[1])
-
-        cv2.imshow('BMO', bmoBg)
+        else: 
+            cv2.imshow('BMO', bmoBg)
+        cv2.resizeWindow('BMO', 1080, 136)
 
         cv2.waitKey(1)
 
