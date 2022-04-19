@@ -13,8 +13,10 @@ def main():
 
     while True:
         success, img = cap.read()
+        #bmoBg = cv2.imread(fname, cv2.IMREAD_GRAYSCALE)
         bmoBg = cv2.imread(fname, cv2.IMREAD_COLOR)
         #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)   # 이미지 색을 흑백으로 변경(계산 속도 향상을 위해)
+        img = cv2.flip(img, 1) # 1은 좌우 반전, 0은 상하 반전입니다.
         img, bboxs = detector.findFaces(img)
         cTime = time.time()
         fps = 1 / (cTime - pTime)
